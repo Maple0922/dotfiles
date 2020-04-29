@@ -43,5 +43,5 @@ ngtemp(){
 }
 
 vimrc(){
- vim ~/.vimrc
+ vim ~/dotfiles/.vimrc
 }
