@@ -1,5 +1,3 @@
-
-
 # http://zsh.sourceforge.net/Doc/Release/Options.html#Description-of-Options
 setopt hist_ignore_dups
 setopt share_history
@@ -11,6 +9,7 @@ setopt nonomatch
 setopt correct
 
 autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#History-Control
 bindkey '^P' history-beginning-search-backward
@@ -23,16 +22,16 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#vcs_005finfo-Configuration
-zstyle ':vcs_info:git:*' formats '(%b %u%c)'
+zstyle ':vcs_info:git:*' formats '(%b%u%c)'
 zstyle ':vcs_info:git:*' actionformats '[%b|%a]'
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "+"
-zstyle ':vcs_info:git:*' unstagedstr "*"
+zstyle ':vcs_info:git:*' stagedstr " +"
+zstyle ':vcs_info:git:*' unstagedstr " *"
 
 
 # PROMPT
 PROMPT='
-%F{7}%!%f %(?,😊,🥺) %F{4}%~%f %F{1}'\$vcs_info_msg_0_' %f
+%F{7}%!%f %(?,😊,🥺) %F{4}%B%~%b%f %F{1}'\$vcs_info_msg_0_' %f
 \$ '
 RPROMPT="%K{0}%F{2}%U20%D %*%u%f%k"
 # black	0
