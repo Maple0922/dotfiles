@@ -1,15 +1,18 @@
-source /usr/local/Cellar/git/2.24.1/etc/bash_completion.d/git-prompt.sh
-source /usr/local/Cellar/git/2.24.1/etc/bash_completion.d/git-completion.bash
+source /usr/local/etc/bash_completion.d/git-prompt.sh
+source /usr/local/etc/bash_completion.d/git-completion.bash
+stty stop undef
 
 GIT_PS1_SHOWDIRTYSTATE=true
 
-export PS1='\[\e[1;97m\]\# ✍️  \[\e[0;3;32m\]\t \[\e[0;1;34m\]\w\[\e[m\]\[\033[31m\] $(__git_ps1 "(%s) ")\[\033[00m\]$ '
+export PS1='\n\[\e[1;97m\]\# ✍️  \[\e[0;3;32m\]\t \[\e[0;1;34m\]\w\[\e[m\]\[\033[31m\] $(__git_ps1 "(%s) ")\[\033[00m\] \n $ '
 
 export PATH=$PATH:/Users/futonakajima/.nodebrew/current/bin
 
 source ~/git-completion.bash
 
 alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'"
+alias pack="cat package.json"
+eval "$(gh completion -s bash)"
 
 tenki(){
   curl -H "Accept-Language: ${LANG%_*}" wttr.in/"${1:-Tokyo}"
@@ -27,17 +30,12 @@ sshq(){
   ssh ${1}
 }
 
-sass(){
-  node-sass sass/style.scss css/style.css
-  node-sass sass/style.scss css/style.css ${1}
-}
-
 phps(){
   php -S localhost:${1:-1234}
 }
 
-site(){
-  open https://Maple0922.github.io/${1}
+noti(){
+  terminal-notifier -message ${1:-"Command has been completed!!"}
 }
 
 newsite(){
@@ -50,33 +48,19 @@ newsite(){
   git add .
   git commit -m 'initial commit'
   npm i
-  echo -e \\nPlease make repository named "${1:-newsite}" on github.com and follow the steps below.\\n
-  echo "    $ git remote add origin https://github.com/Maple0922/${1:-newsite}"
-  echo -e "    $ git push -u origin master\\n"
+  npm audit fix --force
   echo ${1:-newsite} | pbcopy
-  open https://github.com/new
-}
-
-ngtemp(){
-  cp -f ~/Web/angular-make-template-file/index.html ./src/index.html
-  cp -f ~/Web/angular-make-template-file/styles.scss ./src/styles.scss
-  cp -f ~/Web/angular-make-template-file/app.component.html ./src/app/app.component.html
-  cp -r ~/Web/angular-make-template-file/js ./src/assets/
-  cp -r ~/Web/angular-make-template-file/scss ./src/assets/
-  cp -r ~/Web/angular-make-template-file/icon ./src/assets/
-  rm ./src/favicon.ico
-  mkdir ./src/assets/images
+  gh repo create ${1:-newsite} -y --public
+  git push -u origin master
+  open https://github.com/Maple0922/${1:-newsite}
 }
 
 uni(){
   cd ~/University/2020/2_2
 }
-vimrc(){
-  vim ~/dotfiles/.vimrc
-}
-bashrc(){
-  vim ~/.bashrc
-}
-npmtmp(){
-  npm i -D css-loader file-loader gh-pages sass sass-loader style-loader stylelint stylelint-config-recess-order stylelint-config-standard stylelint-scss stylelint-webpack-plugin url-loader vue webpack webpack-cli webpack-dev-server
+
+setrc(){
+  vim ~/.${1:-bash}rc
+  source ~/.${1:-bash}rc
+  echo "😊 ${1:-bash}rc was updated!!"
 }
