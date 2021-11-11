@@ -28,3 +28,20 @@ export PATH=~/.composer/vendor/bin:$PATH
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 export GOPATH=$HOME/go/
 export PATH=$GOPATH/bin:$PATH
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/futonakajima/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/futonakajima/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/futonakajima/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/futonakajima/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export PATH=~/.composer/vendor/bin:/Users/futonakajima/opt/anaconda3/bin:/Users/futonakajima/opt/anaconda3/condabin:/Users/futonakajima/.anyenv/envs/nodenv/shims:/Users/futonakajima/.anyenv/envs/nodenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/opt/X11/bin
