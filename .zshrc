@@ -1,3 +1,5 @@
+export PATH=/opt/homebrew/bin:/bin:~/.composer/vendor/bin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/opt/X11/bin
+
 # http://zsh.sourceforge.net/Doc/Release/Options.html#Description-of-Options
 setopt hist_ignore_dups
 setopt share_history
@@ -61,21 +63,7 @@ sshq(){
   ssh ${1}
 }
 
-firedepfunc(){
-  echo "  > firebase deploy --only functions:${1}"
-  firebase deploy --only functions:${1}
-}
-
-firedephos(){
-  echo "  > firebase deploy --only hosting"
-  firebase deploy --only hosting
-}
-
-phps(){
-  php -S localhost:${1:-1234}
-}
-
-laravel-cache(){
+laracache(){
 php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
@@ -86,10 +74,6 @@ php artisan optimize
 php artisan config:cache
 }
 
-tenki(){
-  curl -H "Accept-Language: ${LANG%_*}" wttr.in/"${1:-Tokyo}"
-}
-
 dep(){
   now=`date "+%Y/%m/%d %H:%M"`
   git add .
@@ -97,49 +81,9 @@ dep(){
   git push origin ${2:-master}
 }
 
-newsite(){
-  mkdir ${1:-newsite}
-  git clone https://github.com/Maple0922/test-site.git ${1:-newsite}
-  cd ${1:-newsite}
-  rm -rf .git
-  git init
-  echo package.json >> .gitignore
-  git add .
-  git commit -m 'initial commit'
-  npm i
-  npm audit fix --force
-  echo ${1:-newsite} | pbcopy
-  gh repo create ${1:-newsite} -y --public
-  git push -u origin master
-  open https://github.com/Maple0922/${1:-newsite}
-}
-
-noti(){
-  terminal-notifier -message ${1:-"Command has been completed!!"}
-}
-
 setrc(){
-  vim ~/.${1:-bash}rc
-  source ~/.${1:-bash}rc
-  echo "😊 ${1:-bash}rc was updated!!"
+  vim ~/.${1:-zsh}rc
+  source ~/.${1:-zsh}rc
+  echo "😊 ${1:-zsh}rc was updated!!"
 }
-eval "$(anyenv init -)"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/futonakajima/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/futonakajima/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/futonakajima/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/futonakajima/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-export PATH=~/bin:~/.composer/vendor/bin:/Users/futonakajima/.anyenv/envs/nodenv/shims:/Users/futonakajima/.anyenv/envs/nodenv/bin:/Users/futonakajima/opt/anaconda3/bin:/Users/futonakajima/opt/anaconda3/condabin:/Users/futonakajima/.anyenv/envs/nodenv/shims:/Users/futonakajima/.anyenv/envs/nodenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/opt/X11/bin
-source ~/.phpbrew/bashrc
-export PATH=/usr/local/opt/php@7.2/bin:$PATH
